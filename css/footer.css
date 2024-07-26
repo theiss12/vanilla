@@ -1,0 +1,50 @@
+@keyframes pop-in {
+    0% {
+        scale: 0;
+    }
+    80% {
+        scale: 1.5;
+    }
+    100% {
+        scale: 1;
+    }
+}
+
+.footer {
+    overflow: hidden;
+    min-height: 80vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    .footer__links {
+        list-style-type: none;
+        padding: 0;
+        margin: 0;
+
+        .footer__item {
+            text-align: center;
+            margin: 32px 0;
+        }
+
+        .footer__link {
+            display: inline-block;
+            font-size: 24px;
+            color: #333;
+        }
+    }
+}
+
+@media (min-width: 421px) {
+    .footer {
+        .footer__links {
+            .footer__item {
+                margin: 48px 0;
+            }
+
+            .footer__link {
+                font-size: 36px;
+            }
+        }
+    }
+}

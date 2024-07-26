@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vanilla🍦</title>
+    <link rel="stylesheet" href="./css/style.css">
+    <link rel="stylesheet" href="./css/navigation.css">
+    <link rel="stylesheet" href="./css/slides.css">
+    <link rel="stylesheet" href="./css/services.css">
+    <link rel="stylesheet" href="./css/footer.css">
+</head>
+<body>
+    <nav class="navigation">
+        <div class="navigation__toggle-container">
+            <button class="navigation__toggle navigation__toggle--lined">
+                <div class="button-line button-line--top"></div>
+                <div class="button-line button-line--middle"></div>
+                <div class="button-line button-line--bottom"></div>
+            </button>
+        </div>
+        <ul class="navigation__items">
+            <li class="navigation__item navigation__item--active"><a href="./index.html">Home</a></li>
+            <li class="navigation__item"><a href="#services">About</a></li>
+            <li class="navigation__item"><a href="./contact.html">Contact</a></li>
+            <li class="navigation__item"><a href="./cards.html">CSS only</a></li>
+        </ul>
+    </nav>
+    <section class="slider">
+
+        <div class="slides">
+            <div style="background-image: url(./images/slides/s1.jpg);" class="slides__slide slides__slide--active">
+                <h2 class="slide-title">Web app?</h2>
+            </div>
+            <div style="background-image: url(./images/slides/s2.jpg);" class="slides__slide">
+                <h2 class="slide-title">UI?</h2>
+            </div>
+            <div style="background-image: url(./images/slides/s3.jpg);" class="slides__slide">
+                <h2 class="slide-title">Still waiting?</h2>
+            </div>
+            <div style="background-image: url(./images/slides/s4.jpg);" class="slides__slide">
+                <h2 class="slide-title">Contact me!</h2>
+            </div>
+        </div>
+
+        <div class="slide-controlls">
+            <button class="slide-controlls__button slide-controlls__button--left">-</button>
+            <button class="slide-controlls__button slide-controlls__button--right">+</button>
+        </div>
+
+        <div class="slide-pagination">
+            <button class="slide-pagination__button slide-pagination__button--active" value="0">1</button>
+            <button class="slide-pagination__button" value="1">2</button>
+            <button class="slide-pagination__button" value="2">3</button>
+            <button class="slide-pagination__button" value="3">4</button>
+        </div>
+
+    </section>
+
+    <section class="services" id="services">
+        <h2 class="services__title">Services</h2>
+        <div class="container">
+            <div class="service">
+                <h3 class="service__title">
+                    React
+                </h3>
+                <img src="./images/services/react.png" class="service__image" alt="react logo">
+            </div>
+            <div class="service">
+                <h3 class="service__title">
+                    Angular
+                </h3>
+                <img src="./images/services/angular.png" class="service__image" alt="react logo">
+            </div>
+            <div class="service">
+                <h3 class="service__title">
+                    HTML
+                </h3>
+                <img src="./images/services/html.png" class="service__image" alt="react logo">
+            </div>
+            <div class="service">
+                <h3 class="service__title">
+                    CSS
+                </h3>
+                <img src="./images/services/css.png" class="service__image" alt="react logo">
+            </div>
+            <div class="service">
+                <h3 class="service__title">
+                    JavaScript
+                </h3>
+                <img src="./images/services/js.png" class="service__image" alt="react logo">
+            </div>
+        </div>
+    </section>
+
+    <footer class="footer">
+        <ul class="footer__links">
+            <li class="footer__item">
+                <a class="footer__link" href="http://www.tamas-zeiss-dev.hu">Portfolio</a>
+            </li>
+            <li class="footer__item">
+                <a class="footer__link" href="https://github.com/theiss12?tab=repositories">Github</a>
+            </li>
+            <li class="footer__item">
+                <a class="footer__link" href="https://www.linkedin.com/in/tam%C3%A1s-zeiss-2577202a3/">LinkedIn</a>
+            </li>
+            <li class="footer__item">
+                <a class="footer__link" href="mailto:tamas.zeiss@gmail.com">tamas.zeiss@gmail.com</a>
+            </li>
+            <li class="footer__item">
+                <a class="footer__link" href="./assets/cv.pdf" download="Tamas_Zeiss_CV.pdf">CV</a>
+            </li>
+        </ul>
+    </footer>
+
+    <script type="module" src="./js/main.js"></script>
+</body>
+</html>
