@@ -1,0 +1,80 @@
+.component-gallery {
+    --gap: 10px;
+
+    display: flex;
+    gap: var(--gap);
+    justify-content: center;
+    background-color: #333;
+    padding: var(--gap) 0;
+
+    .column {
+        width: 30%;
+
+        .image-wrapper {
+            overflow: hidden;
+            transition: box-shadow .25s;
+            cursor: pointer;
+
+            .column__image {
+                display: block;
+                width: 100%;
+                object-fit: contain;
+                
+                margin: 0 0 var(--gap);
+                transition: scale .25s;
+                
+                &:hover {
+                    scale: 1.2;
+                }
+            }
+
+            &:hover {
+                box-shadow: 0 0 20px white;
+            }
+        }
+    }
+
+    @keyframes fade-in {
+        from {
+            opacity: 0;
+        }
+        to {
+            opacity: 1;
+        }
+    }
+
+    .inspector {
+        display: none;
+        position: fixed;
+        top: 0px;
+        left: 0px;
+        height: 100vh;
+        width: 100vw;
+        background-color: rgba(0,0,0,.75);
+        animation-fill-mode: backwards;
+        animation-duration: 1s;
+
+
+        .inspector__image {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            translate: -50% -50%;
+            height: 100vmin;
+            object-fit: contain;
+        }
+
+        &.inspector--active {
+            display: block;
+            animation-name: fade-in;
+        }
+
+
+    }
+}
+
+@media (min-width: 421px) {
+    .component-gallery {
+        --gap: 20px;
+    }
+}

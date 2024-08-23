@@ -1,0 +1,52 @@
+@keyframes pop-in {
+    0% {
+        scale: 0;
+    }
+    80% {
+        scale: 1.5;
+    }
+    100% {
+        scale: 1;
+    }
+}
+
+.component-contacts {
+    overflow: hidden;
+    min-height: 80vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 1vh;
+    align-items: center;
+
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+
+    * {
+        font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+    }
+
+    .component-contacts__item {
+        text-align: center;
+        margin: 32px 0;
+    }
+
+    .component-contacts__link {
+        display: inline-block;
+        font-size: 24px;
+        color: #333;
+    }
+}
+
+@media (min-width: 421px) {
+    .component-contacts {
+        .component-contacts__item {
+            margin: 48px 0;
+        }
+
+        .component-contacts__link {
+            font-size: 36px;
+        }
+    }
+}

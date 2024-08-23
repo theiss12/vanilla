@@ -1,27 +1,32 @@
-.navigation {
-    position: sticky;
+.component-navigation {
+    position: fixed;
     top: 0px;
     left: 0px;
     z-index: 400;
+    width: 100vw;
     background-color: #333;
     box-shadow: 0 0 20px rgba(0,0,0,.5);
 
-    .navigation__toggle-container {
+    * {
+        font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+    }
+
+    .component-navigation__toggle-container {
         min-height: 60px;
         display: flex;
         align-items: center;
         padding-left: 10px;
     }
 
-    .navigation__items {
+    .component-navigation__items {
         list-style-type: none;
         margin: 0;
         padding: 0;
     }
 
-    .navigation__item {
+    .navigation-item {
 
-        a {
+        .navigation-item__link {
             display: flex;
             overflow: hidden;
             justify-content: center;
@@ -36,15 +41,15 @@
         }
     }
 
-    &.navigation--open {    
-        .navigation__item {
-            a {
+    &.component-navigation--open {    
+        .navigation-item {
+            .navigation-item__link {
                 padding: 24px 24px;
             }
         }
     }
 
-    .navigation__toggle {
+    .navigation-toggle {
         --square-dimensions: 40px;
         height: var(--square-dimensions);
         width: var(--square-dimensions);
@@ -59,7 +64,7 @@
         border-radius: calc(var(--square-dimensions) * 0.1); */
         border: none;
 
-        &.navigation__toggle--lined {
+        &.navigation-toggle--lined {
             .button-line {
                 &.button-line--top {
                     transform: rotate(0deg);
@@ -110,24 +115,24 @@
 }
 
 @media (min-width: 421px) {
-    .navigation {
-        .navigation__toggle-container {
+    .component-navigation {
+        .component-navigation__toggle-container {
             display: none;
         }
 
-        .navigation__items {
+        .component-navigation__items {
             display: flex;
             justify-content: center;
             align-items: center;
         }
 
-        .navigation__item {
+        .navigation-item {
             height: 70px;
             display: flex;
             justify-content: center;
             align-items: center;
 
-            a {
+            .navigation-item__link {
                 border-right: 1px solid white;
                 font-size: 20px;
                 padding: 16px 24px;
