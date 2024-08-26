@@ -8,39 +8,24 @@ export class SliderComponent extends Component {
         const component = this;
         this.changeCallbacks = {
             slides: slides => {
-                // reset contents
-
-                component.slidesContainer.innerHTML =
-                component.slidePagination.innerHTML = "";
+                this.clearForRepeat("slides__slide");
+                this.clearForRepeat("slide-pagination__button");
 
                 const newSlides = JSON.parse(slides);
                 component.maxSlides = newSlides.length - 1;
                 newSlides.forEach((slideObject, slideObjectIndex) => {
-                    
-                    this.repeat(
-                        "slide-title",
-                        "slides__slide",
-                        {innerHTML: slideObject.title},
-                        true
-                    );
-                    this.repeat(
-                        "slides__slide",
-                        "slides",
-                        {
-                            className: `slides__slide${slideObjectIndex === 0 ? " slides__slide--active" : ""}`,
-                            style: `background-image: url("${slideObject.imageUrl}")`
-                        }
-                    );
-                    this.repeat(
-                        "slide-pagination__button",
-                        "slide-pagination",
-                        {
-                            className: `slide-pagination__button${slideObjectIndex === 0 ? " slide-pagination__button--active" : ""}`,
-                            value: slideObjectIndex,
-                            innerHTML: slideObjectIndex,
-                            onclick: () => component.state.slideindex = slideObjectIndex
-                        }
-                    )
+                    this.repeat("slides__slide", {
+                        className: `slides__slide${slideObjectIndex === 0 ? " slides__slide--active" : ""}`,
+                        style: `background-image: url("${slideObject.imageUrl}")`,
+                        "slide-title": {innerHTML: slideObject.title}
+                    })
+
+                    this.repeat("slide-pagination__button", {
+                        className: `slide-pagination__button${slideObjectIndex === 0 ? " slide-pagination__button--active" : ""}`,
+                        value: slideObjectIndex,
+                        innerHTML: slideObjectIndex,
+                        onclick: () => component.state.slideindex = slideObjectIndex
+                    })
                 })
             },
 
@@ -79,11 +64,9 @@ export class SliderComponent extends Component {
     }
 
     onTemplateLoad() {
-        this.slidesContainer = this.shadowDocument.querySelector(".slides");
-        this.slidePagination = this.shadowDocument.querySelector(".slide-pagination");
         this.shadowDocument.querySelector(".slide-controlls__button--left").addEventListener("click", () => {this.changeIndexBy(-1)});
         this.shadowDocument.querySelector(".slide-controlls__button--right").addEventListener("click", () => {this.changeIndexBy(1)});
-        this.slidesContainer.addEventListener("scroll", () => {this.startAutoSlide()});
+        this.shadowDocument.querySelector(".slides").addEventListener("scroll", () => {this.startAutoSlide()});
         this.startAutoSlide();
     }
 

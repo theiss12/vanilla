@@ -1,4 +1,5 @@
 import {Component} from "../../js/component.js";
+import { AppearAnimationDriver } from "../../js/appear-animation.js";
 
 export class GalleryComponent extends Component {
     constructor() {
@@ -6,37 +7,31 @@ export class GalleryComponent extends Component {
         const component = this;
         this.changeCallbacks = {
             images: pathsJSON => {
-                // clear columns
-                this.leftColumn.innerHTML = 
-                this.rightColumn.innerHTML = 
-                this.middleColumn.innerHTML = "";
+
+                this.clearForRepeat("image-wrapper--left");
+                this.clearForRepeat("image-wrapper--middle");
+                this.clearForRepeat("image-wrapper--right");
 
                 const paths = JSON.parse(pathsJSON);
                 paths.forEach((path, index) => {
-                    this.repeat(
-                        "column__image",
-                        "image-wrapper",
-                        {
+
+                    let wrapper = "";
+                    const rest = index % 3;
+
+                    if (rest === 0) wrapper = "image-wrapper--left";
+                    else if (rest === 1) wrapper = "image-wrapper--middle";
+                    else if (rest === 2) wrapper = "image-wrapper--right";
+
+                    const image = this.repeat(wrapper, {
+                        "column__image": {
                             src: path,
                             onclick: () => {
                                 component.state.inspectoractive = "true",
                                 component.state.activeindex = index
                             }
-                        },
-                        true
-                    );
-
-                    let column = "";
-                    const rest = index % 3;
-
-                    if (rest === 0) column = "column column--left";
-                    else if (rest === 1) column = "column column--middle";
-                    else if (rest === 2) column = "column column--right";
-
-                    this.repeat(
-                        "image-wrapper",
-                        column
-                    )
+                        }
+                    });
+                    new AppearAnimationDriver(image, "fade-in", 0.3).start();
                 });
             },
             
@@ -62,9 +57,6 @@ export class GalleryComponent extends Component {
     }
     
     onTemplateLoad() {
-        this.leftColumn = this.shadowDocument.querySelector(".column--left");
-        this.middleColumn = this.shadowDocument.querySelector(".column--middle");
-        this.rightColumn = this.shadowDocument.querySelector(".column--right");
         this.inspector = this.shadowDocument.querySelector(".inspector");
         this.inspectorImage = this.shadowDocument.querySelector(".inspector__image");
 

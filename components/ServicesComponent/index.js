@@ -7,25 +7,18 @@ export class ServicesComponent extends Component {
 
         this.changeCallbacks = {
             items: newItemsJSON => {
-                this.servicesContainer.innerHTML = "";
+                this.clearForRepeat("service");
                 const newItems = JSON.parse(newItemsJSON);
                 newItems.forEach(itemObject => {
-                    const image = this.repeat(
-                        "service__image",
-                        "service",
-                        {src: itemObject.imageUrl},
-                        true
-                    );
-                    this.repeat(
-                        "service__title",
-                        "service",
-                        {innerHTML: itemObject.title},
-                        true
-                    );
-                    const service = this.repeat(
-                        "service",
-                        "container",
-                    );
+                    const service = this.repeat("service", {
+                        "service__image": {
+                            src: itemObject.imageUrl
+                        },
+                        "service__title": {
+                            innerHTML: itemObject.title
+                        }
+                    });
+                    const image = service.querySelector(".service__image");
                     new AppearAnimationDriver(service, "appear", 0.33).start();
                     new AppearAnimationDriver(image, "from-right", 0.3).start();
                 });
@@ -37,9 +30,7 @@ export class ServicesComponent extends Component {
         return ["items"];
     }
 
-    onTemplateLoad() {
-        this.servicesContainer = this.shadowDocument.querySelector(".container");
-    }
+    onTemplateLoad() {}
 }
 
 customElements.define("services-component", ServicesComponent);

@@ -5,27 +5,19 @@ export class NavigationComponent extends Component {
         const component = this;
         this.changeCallbacks = {
             navigationitems: newItemsJSON => {
-                this.navigationItems.innerHTML = "";
+                this.clearForRepeat("navigation-item");
                 const newItems = JSON.parse(newItemsJSON);
                 newItems.forEach((navigationItemObject, navigationItemIndex) => {
-                    this.repeat(
-                        "navigation-item__link",
-                        "navigation-item",
-                        {
+
+                    this.repeat("navigation-item", {
+                        className: `navigation-item${
+                            false ? " navigation-item--active" : ""
+                        }`,
+                        "navigation-item__link": {
                             href: navigationItemObject.endpointUrl,
                             innerHTML: navigationItemObject.label
-                        },
-                        true
-                    );
-                    this.repeat(
-                        "navigation-item",
-                        "component-navigation__items",
-                        {
-                            className: `navigation-item${
-                                false ? " navigation-item--active" : ""
-                            }`
                         }
-                    )
+                    })
                 });
             },
 
@@ -51,7 +43,6 @@ export class NavigationComponent extends Component {
     }
 
     onTemplateLoad() {
-        this.navigationItems = this.shadowDocument.querySelector(".component-navigation__items");
         this.navigation = this.shadowDocument.querySelector(".component-navigation");
         this.toggleButton = this.shadowDocument.querySelector(".navigation-toggle");
         this.toggleButton.addEventListener("click", () => {

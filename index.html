@@ -5,18 +5,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Web Components</title>
     <link rel="stylesheet" href="./css/style.css">
-    <!-- <script defer src="./js/components/HeaderComponent.js"></script> -->
 </head>
 <body>
 
-    <!-- <header-component color="green" level="1">
-        <span slot="title">Main Title</span>
-        <span slot="subtitle">Subtitle</span>
-    </header-component>
-    <header-component color="red" level="2">
-        <span slot="title">Title 2</span>
-        <span slot="subtitle">Subtitle 2</span>
-    </header-component> -->
     <header>
         <navigation-component
             navigationitems='[
@@ -28,6 +19,7 @@
             open="false";
         ></navigation-component>
     </header>
+
     <main class="main">
         <slider-component
             slideindex="0"
@@ -38,12 +30,12 @@
             items="[]"
         >
         </services-component>
-        <!-- <gallery-component 
+        <gallery-component 
             images='[]'
             inspectoractive='false'
             activeindex='0'
         >
-        </gallery-component> -->
+        </gallery-component>
     </main>
 
     <footer>

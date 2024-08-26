@@ -7,31 +7,22 @@ export class ContactsComponent extends Component {
 
         this.changeCallbacks = {
             links: newLinksJSON => {
-                this.contactList.innerHTML = "";
+                this.clearForRepeat("component-contacts__item");
                 const newLinks = JSON.parse(newLinksJSON);
                 newLinks.forEach(linkObject => {
-                    this.repeat(
-                        "component-contacts__link",
-                        "component-contacts__item",
-                        {
+                    const item = this.repeat("component-contacts__item", {
+                        "component-contacts__link": {
                             href: linkObject.endpointUrl,
                             innerHTML: linkObject.label
-                        },
-                        true
-                    )
-                    const item = this.repeat(
-                        "component-contacts__item",
-                        "component-contacts"
-                    )
+                        }
+                    })
                     new AppearAnimationDriver(item, "pop-in", 0.3).start();
                 });
             }
         };
     }
 
-    onTemplateLoad() {
-        this.contactList = this.shadowDocument.querySelector(".component-contacts");
-    }
+    onTemplateLoad() {}
 
     static get observedAttributes() {
         return ["links"];

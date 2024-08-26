@@ -4,7 +4,6 @@ export class Component extends HTMLElement {
         this.shadowDocument = this.attachShadow({ mode: "open" });
         this.templateLoaded = false;
         this.pendingAttributes = {};
-        this.repeatables = {};
         const component = this;
         this.state = new Proxy( // shortcut to attributes
             {},
@@ -25,18 +24,30 @@ export class Component extends HTMLElement {
         // };
     }
 
-    // static get observedAttributes() {
-    //     return [];
-    // }
+    static get observedAttributes() {
+        console.warn(`Implement satic get observedAttributes method: return ["attribute1", "attribute2", ...];`);
+        return [];
+    }
     
-    // onTemplateLoad() {
-    //     this.elementName = document.querySelector(".elementClassName").
-    //     this.elementName.addEventListener("click" () => {});
-    // }
+    onTemplateLoad() {
+        console.warn(`Implement onTemplateLoad method for ${this.constructor.name}:
+this.elementName = document.querySelector(".elementClassName");
+this.elementName.addEventListener("click", () => {});
+        `);
+    }
 
     attributeChangedCallback(attributeName, oldValue, newValue) {
         if (!this.templateLoaded) {
             this.pendingAttributes[attributeName] = newValue;
+            return;
+        }
+        if (!this.changeCallbacks) {
+            console.warn(`Implement changeCallbacks property in constructor of ${this.constructor.name}: 
+this.changeCallbacks = {
+    attributeName: newValue => {
+        /*... do something */
+    }
+};`)
             return;
         }
         const callback = this.changeCallbacks[attributeName];
@@ -46,15 +57,6 @@ export class Component extends HTMLElement {
         if (this.state[attributeName] !== newValue) {
             this.state[attributeName] = newValue;
         }
-    }
-
-    capturePotentialClones() {
-        [...this.shadowDocument.querySelectorAll("*")].forEach(element => {
-            const className = element.className;
-            if (className) {
-                this.repeatables[className] = element;
-            }
-        });
     }
 
     async loadTemplate() {
@@ -73,7 +75,6 @@ export class Component extends HTMLElement {
         this.shadowDocument.appendChild(styleElement);
         this.shadowDocument.appendChild(templateElement.content.cloneNode(true));
         
-        this.capturePotentialClones();
         if (this.onTemplateLoad) {
             this.onTemplateLoad();
         }
@@ -89,43 +90,38 @@ export class Component extends HTMLElement {
         this.pendingAttributes = {};
     }
 
-    /**
-     * 
-     * @param {*} repeatElementClassName like pressing ctrl + C on an element
-     * @param {*} containerClassName like selecting the area to be pasted
-     * @param {*} alterations 
-     * @param {Boolean} replace like pressing ctrl + A before ctrl + V 
-     * @returns {HTMLElement} output of ctrl + V
-     */
-    repeat(repeatElementClassName, containerClassName, alterations = {}, replace = false) {
-        const repeatElement = this.repeatables[repeatElementClassName];
-        Object.keys(alterations).forEach(attribute => {
-            repeatElement[attribute] = alterations[attribute];
+    clearForRepeat(className) {
+        [...this.shadowDocument.querySelectorAll(`.${className}`)].forEach((element, elementIndex) => {
+            if (elementIndex === 0) {
+                element.dataset.copied = false;
+            }
+            else {
+                element.remove();
+            }
         })
-        const container = this.repeatables[containerClassName];
-        if (replace) {
-            // container.innerHTML = ""
-            container.querySelector(`.${repeatElementClassName}`).remove();
-            // console.log("replace");
-        }
-        container.appendChild(repeatElement);
-        this.repeatables[repeatElementClassName] = repeatElement.cloneNode(true);
-        return container.lastElementChild;
     }
 
-    // copyPasteNew(copiedClassName, alterations = {}, purgeContainer = false, targetContainer) {
-    //     const copiedElement = this.shadowDocument.querySelector(`.${copiedClassName}`);
-    //     const container = targetContainer ? targetContainer : copiedElement.parentElement;
-    //     const clone = copiedElement.cloneNode(true);
-    //     Object.keys(alterations).forEach(attribute => {
-    //         clone[attribute] = alterations[attribute];
-    //     });
-    //     clone.dataset.clone = "clone";
-    //     if (purgeContainer) {
-    //         container.innerHTML = "";
-    //     }
-    //     container.appendChild(clone);
-    //     if (copiedElement.dataset.clone !== "clone") copiedElement.remove();
-    //     return clone;
-    // }
+    repeat(className, changer) {
+        const allClassElements = this.shadowDocument.querySelectorAll(`.${className}`);
+        let element = allClassElements[allClassElements.length - 1];
+        if (element.dataset.copied === "true") {
+            element.parentElement.appendChild(element.cloneNode(true));
+            element = element.nextElementSibling;
+        }
+        element.dataset.copied = true;
+        this.change(element, changer);
+        return element;
+    }
+
+    change(element, changer) {
+        Object.keys(changer).forEach(attributeName => {
+            if (attributeName in element) {
+                element[attributeName] = changer[attributeName];
+            }
+            else {
+                const child = element.querySelector(`.${attributeName}`);
+                this.change(child, changer[attributeName]);
+            }
+        })
+    }
 }

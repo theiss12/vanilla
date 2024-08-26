@@ -1,35 +1,40 @@
+@keyframes fade-in {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
+
 .component-gallery {
     --gap: 10px;
 
     display: flex;
     gap: var(--gap);
     justify-content: center;
-    background-color: #333;
+    background-color: white;
     padding: var(--gap) 0;
 
     .column {
         width: 30%;
 
         .image-wrapper {
+            margin: 0 0 var(--gap);
             overflow: hidden;
             transition: box-shadow .25s;
             cursor: pointer;
+            box-shadow: 0 0 10px rgba(0,0,0,.5);
 
             .column__image {
                 display: block;
                 width: 100%;
                 object-fit: contain;
-                
-                margin: 0 0 var(--gap);
                 transition: scale .25s;
                 
                 &:hover {
                     scale: 1.2;
                 }
-            }
-
-            &:hover {
-                box-shadow: 0 0 20px white;
             }
         }
     }
@@ -48,9 +53,11 @@
         position: fixed;
         top: 0px;
         left: 0px;
+        z-index: 1000;
         height: 100vh;
         width: 100vw;
-        background-color: rgba(0,0,0,.75);
+        /* background-color: rgba(0,0,0,.75); */
+        backdrop-filter: blur(10px);
         animation-fill-mode: backwards;
         animation-duration: 1s;
 
